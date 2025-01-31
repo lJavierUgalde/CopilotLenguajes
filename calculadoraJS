@@ -1,0 +1,70 @@
+function suma(a, b) {
+    return a + b;
+}
+
+function resta(a, b) {
+    return a - b;
+}
+
+function multiplicacion(a, b) {
+    return a * b;
+}
+
+function division(a, b) {
+    if (b === 0) {
+        return "Error: División por cero";
+    }
+    return a / b;
+}
+
+function main() {
+    console.log("Calculadora en JavaScript");
+    console.log("Selecciona una operación:");
+    console.log("1. Suma");
+    console.log("2. Resta");
+    console.log("3. Multiplicación");
+    console.log("4. División");
+
+    const readline = require('readline').createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
+    function preguntarOperacion() {
+        readline.question("Ingresa el número de la operación (1/2/3/4): ", operacion => {
+            if (['1', '2', '3', '4'].includes(operacion)) {
+                readline.question("Ingresa el primer número: ", num1 => {
+                    readline.question("Ingresa el segundo número: ", num2 => {
+                        num1 = parseFloat(num1);
+                        num2 = parseFloat(num2);
+
+                        if (operacion === '1') {
+                            console.log(`${num1} + ${num2} = ${suma(num1, num2)}`);
+                        } else if (operacion === '2') {
+                            console.log(`${num1} - ${num2} = ${resta(num1, num2)}`);
+                        } else if (operacion === '3') {
+                            console.log(`${num1} * ${num2} = ${multiplicacion(num1, num2)}`);
+                        } else if (operacion === '4') {
+                            console.log(`${num1} / ${num2} = ${division(num1, num2)}`);
+                        }
+
+                        readline.question("¿Quieres realizar otra operación? (sí/no): ", siguiente_operacion => {
+                            if (siguiente_operacion.toLowerCase() !== 'sí') {
+                                readline.close();
+                            } else {
+                                preguntarOperacion();
+                            }
+                        });
+                    });
+                });
+            } else {
+                console.log("Operación no válida. Por favor, intenta de nuevo.");
+                preguntarOperacion();
+            }
+        });
+    }
+
+    preguntarOperacion();
+}
+
+main();
